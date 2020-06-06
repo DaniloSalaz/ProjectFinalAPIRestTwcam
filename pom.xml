@@ -49,6 +49,35 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- Plugin para generar la imagen del contenedor -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<configuration>
+					<imageName>${project.artifactId}-proyecto-1:${project.version}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<requiresUnpack>
+						<dependency>
+							<groupId>es.uv.twcam.projects.airproject</groupId>
+							<artifactId>project-data-air</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+						</dependency>
+					</requiresUnpack>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
