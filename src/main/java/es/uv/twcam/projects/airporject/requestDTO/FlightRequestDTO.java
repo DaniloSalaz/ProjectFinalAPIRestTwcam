@@ -18,6 +18,7 @@ public class FlightRequestDTO implements Serializable{
 	private String departureTime;
 	private String boardingTime;
 	private LocalDate arrival; 
+	private String arrivalTime;
 	private String iataAirline;
 	private String codeAircraft;
 	private String iataAirportDestination;
@@ -117,6 +118,14 @@ public class FlightRequestDTO implements Serializable{
 
 	public void setArrival(LocalDate arrival) {
 		this.arrival = arrival;
+	}
+
+	public String getArrivalTime() {
+		return arrivalTime;
+	}
+
+	public void setArrivalTime(String arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
 
 }

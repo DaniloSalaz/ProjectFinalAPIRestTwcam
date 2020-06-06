@@ -1,6 +1,7 @@
 package es.uv.twcam.projects.airporject.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -69,7 +70,6 @@ public class FlightController {
 		
 		//TODO manejador bad request 
 		//MissingServletRequestParameterException cuando los parametros no son los adecuados
-		//NumberFormatException conversion de numeros en la fecha
 		
 		String[] fechaVuelo = dateFlight.split("-");
 		int year = Integer.parseInt(fechaVuelo[0]);
@@ -177,6 +177,12 @@ public class FlightController {
 		LocalDate reservationDate = flightDTO.getReservationDate();
 		LocalDate arrival = flightDTO.getArrival();
 		
+		String[] arriTime = flightDTO.getArrivalTime().split(":");
+		int hour = Integer.parseInt(arriTime[0]);
+		int minute = Integer.parseInt(arriTime[1]);
+		
+		LocalDateTime arrivalTime = LocalDateTime.of(arrival.getYear(), arrival.getMonth(), arrival.getDayOfMonth(), hour, minute);
+		
 		int year = flightDTO.getYear();
 		int month = flightDTO.getMonth();
 		int day = flightDTO.getDay();
@@ -194,7 +200,7 @@ public class FlightController {
 			throw new AircraftNotFoundException();
 		
 		Flight newFlight = new Flight(reservationDate, year, month, day, departureTime, boardingTime,
-				arrival, 0,50,cost,100f,100f,airline, dest, origin,aircraft, Status.scheduled); 
+				arrivalTime, 0,50,cost,100f,100f,airline, dest, origin,aircraft, Status.scheduled); 
 		flightService.createFlight(newFlight);
 		insertarSeat(newFlight);
 		
